@@ -1,7 +1,6 @@
 // cascader Initializer.
 /**
  *  
- * 
  *  @param element string -- .class or #id
  * 
  *  @param data_tree array[] -- consist of id and title and subarray as Children[]
