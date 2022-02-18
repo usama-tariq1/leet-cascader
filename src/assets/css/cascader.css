@@ -1,0 +1,23 @@
+.main-list {
+    display: none;
+    position: absolute;
+}
+
+.sub-list {
+    display: none;
+    position: absolute;
+    transform: translateX(100%);
+    right: 0;
+    top: 0;
+}
+
+.list-group-item {
+    text-transform: capitalize;
+    margin: 0 2px;
+    cursor: pointer;
+    width: 150px;
+}
+
+#exampleForm2 {
+    text-transform: capitalize;
+}
