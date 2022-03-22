@@ -1,30 +1,30 @@
 // cascader Initializer.
 /**
- *  
+ *
  *  @param element string -- .class or #id
- * 
+ *
  *  @param data_tree array[] -- consist of id and title and subarray as Children[]
- * 
+ *
  *  @return nothing
- * 
+ *
  *  @example -- cascader_init(".cascader" , data_tree );
- * 
+ *
  *  @example data_tree = [{
  *                          "id": 1,
  *                          "title": "Electronics",
- *           
+ *
  *                          "children": [{
  *                                          "id": 2,
  *                                          "title": "Tvs",
- *               
+ *
  *                                          "children": [{
  *                                                          "id": 9,
  *                                                          "title": "Led",
- *                   
+ *
  *                                                      }]
  *                                      }]
  *                        }]
- * 
+ *
  */
 function cascader_init(element, data_tree) {
     var $cascader = $(element);
@@ -34,7 +34,17 @@ function cascader_init(element, data_tree) {
 
         cascader_id = new_cascader_id();
         $cascader.attr('cascader_id', cascader_id);
-        $cascader.attr('current_value', '');
+
+        if ($cascader.attr('current_value') == undefined) {
+
+            $cascader.attr('current_value', '');
+            var input_clone_val = '';
+        } else {
+            // $cascader.attr('current_value', );
+            var input_clone_val = $cascader.attr('current_value');
+
+
+        }
 
         $cascader.after(`
             <div class="cascader-list main-list" cascaderList="${cascader_id}">
@@ -45,8 +55,8 @@ function cascader_init(element, data_tree) {
         var input_name = $cascader.attr('name');
         $cascader.attr('name', '');
         $cascader.after(`
-            <input type="text"  name="${input_name}" input-clone="${cascader_id}" style="display:none;">
-            
+            <input type="text"  name="${input_name}" input-clone="${cascader_id}" value="${input_clone_val}" style="display:none;">
+
         `);
 
     }
@@ -75,7 +85,7 @@ function cascader_init(element, data_tree) {
         $(this).find("> ul").show(0);
 
         if ($(this).find('ul').length == 0) {
-            // get current value 
+            // get current value
             var current_value = $(this).attr('cat-id');
 
             // Animate Cascader list
@@ -85,8 +95,8 @@ function cascader_init(element, data_tree) {
             var cas_input_id = $(this).parents('[cascaderList]').attr('cascaderList');
             var input = $('body').find(`[cascader_id="${cas_input_id}"]`);
             input.attr('current_value', current_value);
-            // set clone input value 
-            $('body').find(`[input-clone="${cas_input_id}"]`).val(current_value);
+            // set clone input value
+            $('body').find(`[input-clone="${cas_input_id}"]`).val(current_value).trigger('change');
 
             // set text array
             var current_text = [];
@@ -101,6 +111,8 @@ function cascader_init(element, data_tree) {
 
             });
             input.val(current_text.join('/'));
+            input.trigger('change');
+
         }
 
     });
